@@ -154,4 +154,5 @@ npx prisma generate
 
 ---
 
-Thank you! If you want, I can add the Postman collection file into the repo now.
+Thank you!
+
