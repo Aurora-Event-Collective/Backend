@@ -26,6 +26,51 @@ app.get('/events/:id/stats', async (req, res) => {
 	}
 })
 
+// Get aggregated counts for an event (per-platform totals)
+// Optional query param: ?platform=google or ?platform=apple to filter by specific platform
+app.get('/events/:id/counts', async (req, res) => {
+	const { id } = req.params
+	const { platform } = req.query
+	try {
+		const stats = await prisma.calendarStat.findMany({ where: { eventId: id } })
+		const counts = stats.reduce(
+			(acc, s) => {
+				const p = s.platform || 'unknown'
+				acc[p] = (acc[p] || 0) + (s.count || 0)
+				return acc
+			},
+			{ google: 0, apple: 0 }
+		)
+
+		// If platform filter is specified, return only that platform's count
+		if (platform && (platform === 'google' || platform === 'apple')) {
+			return res.json({ eventId: id, platform, count: counts[platform] })
+		}
+
+		res.json({ eventId: id, counts })
+	} catch (err) {
+		console.error(err)
+		res.status(500).json({ error: 'Failed to fetch aggregated counts' })
+	}
+})
+
+// Get global aggregated counts across all events (per-platform totals)
+app.get('/stats/platforms', async (_req, res) => {
+	try {
+		const stats = await prisma.calendarStat.findMany()
+		const counts = stats.reduce((acc, s) => {
+			const p = s.platform || 'unknown'
+			acc[p] = (acc[p] || 0) + (s.count || 0)
+			return acc
+		}, { google: 0, apple: 0 })
+
+		res.json({ counts })
+	} catch (err) {
+		console.error(err)
+		res.status(500).json({ error: 'Failed to fetch global counts' })
+	}
+})
+
 // Increment a specific platform counter for an event
 app.post('/events/:id/click', async (req, res) => {
 	const { id } = req.params
