@@ -6,7 +6,30 @@ import { prisma } from './src/lib/prisma.ts'
 dotenv.config()
 
 const app = express()
-app.use(cors())
+// Configure CORS to allow the frontend origin(s)
+const allowedOrigins = [
+	process.env.FRONTEND_URL || 'http://localhost:3000',
+	'https://localhost:3000',
+	'http://localhost:3001',
+	'https://localhost:3001',
+]
+
+const corsOptions = {
+	origin: function (origin, callback) {
+		// allow requests with no origin (like curl, server-to-server)
+		if (!origin) return callback(null, true)
+		if (allowedOrigins.indexOf(origin) !== -1) {
+			return callback(null, true)
+		}
+		return callback(new Error('CORS policy: This origin is not allowed'))
+	},
+	credentials: true,
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+	allowedHeaders: ['Content-Type', 'Authorization'],
+}
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions)) // preflight
 app.use(express.json())
 
 // Health check
@@ -116,4 +139,5 @@ const shutdown = async () => {
 
 process.on('SIGINT', shutdown)
 process.on('SIGTERM', shutdown)
+
 
