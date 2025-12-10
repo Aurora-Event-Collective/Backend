@@ -2,13 +2,14 @@
 //   // Visit https://aka.ms/tsconfig to read more about this file
 //   "compilerOptions": {
 //     // File Layout
-//     // "rootDir": "./src",
-//     // "outDir": "./dist",
+//     "rootDir": "./src",
+//     "outDir": "./dist",
 
 //     // Environment Settings
 //     // See also https://aka.ms/tsconfig/module
 //     // "module": "nodenext",
 //     "module": "ESNext",
+//     "moduleResolution": "node",
 //     "target": "ES2023",
 //     "esModuleInterop": true,
 //     // "types": [],
@@ -41,7 +42,7 @@
 //     "isolatedModules": true,
 //     "noUncheckedSideEffectImports": true,
 //     "moduleDetection": "force",
-//     "moduleResolution": "bundler",
+//     // "moduleResolution": "bundler",
 //     "skipLibCheck": true,
 //     // "ignoreDeprecations": "6.0"
 //   },
@@ -49,14 +50,55 @@
 // }
 
 
+// {
+//   "compilerOptions": {
+//     "module": "ESNext",
+//     "moduleResolution": "node",
+//     "target": "ES2023",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     // "ignoreDeprecations": "6.0"
+//   },
+//   "include": ["src/**/*", "generated/**/*"]
+// }
+
+
+
+
+
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "target": "ES2023",
-    "strict": true,
+    // File Layout
+    "rootDir": ".",
+    "outDir": "./dist",
+    "baseUrl": ".",
+   
+
+    // Module Settings
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "esModuleInterop": true,
-    // "ignoreDeprecations": "6.0"
+    "types": ["node"],
+    // "typeRoots": ["./node_modules/@types", "./src/types"],
+
+    // Output Settings
+    "sourceMap": true,
+    "declaration": true,
+    // "declarationMap": true,
+    "removeComments": false,
+
+    // Type Checking
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
   },
-  "include": ["src/**/*", "generated/**/*"]
+  "include": ["src/**/*", "prisma/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

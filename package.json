@@ -4,7 +4,11 @@
   "description": "This repository contains the backend for the Aurora Event Collective application.  \r It provides APIs for the frontend (stored in the `frontendd` repo) to consume — handling things like user authentication, event creation/listing, data storage, etc.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build": "tsc",
+    "dev": "tsx watch server.js",
+    "vercel-build": "npm run build && prisma generate && prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
