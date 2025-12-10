@@ -27,5 +27,8 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1"
   },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },  
   "type": "module"
 }
