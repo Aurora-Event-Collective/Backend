@@ -75,8 +75,8 @@
    
 
     // Module Settings
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "target": "ES2022",
     "esModuleInterop": true,
     "types": ["node"],
@@ -99,6 +99,6 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["/**/*", "prisma/**/*"],
+  "include": ["src/**/*", "prisma/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
