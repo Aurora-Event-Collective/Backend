@@ -7,30 +7,65 @@ dotenv.config()
 
 const app = express()
 // Configure CORS to allow the frontend origin(s)
+// const allowedOrigins = [
+// 	process.env.FRONTEND_URL || 'http://localhost:3000',
+// 	'https://localhost:3000',
+// 	'http://localhost:3001',
+// 	'https://localhost:3001',
+// ]
+
+// const corsOptions = {
+// 	origin: function (origin, callback) {
+// 		// allow requests with no origin (like curl, server-to-server)
+// 		if (!origin) return callback(null, true)
+// 		if (allowedOrigins.indexOf(origin) !== -1) {
+// 			return callback(null, true)
+// 		}
+// 		return callback(new Error('CORS policy: This origin is not allowed'))
+// 	},
+// 	credentials: true,
+// 	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+// 	allowedHeaders: ['Content-Type', 'Authorization'],
+// }
+
+// app.use(cors(corsOptions))
+// app.options('*', cors(corsOptions)) // preflight
+// app.use(express.json())
+
 const allowedOrigins = [
-	process.env.FRONTEND_URL || 'http://localhost:3000',
-	'https://localhost:3000',
-	'http://localhost:3001',
-	'https://localhost:3001',
-]
+  process.env.CLIENT_URL || 'http://localhost:5000',
+  'http://localhost:5000',
+  /^http:\/\/192\.168\.\d+\.\d+:\d+$/, // Mobile devices on local network
+  /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,  // Some local network IPs
+  /^http:\/\/172\.\d+\.\d+\.\d+:\d+$/, // Docker/local network IPs
+];
 
-const corsOptions = {
-	origin: function (origin, callback) {
-		// allow requests with no origin (like curl, server-to-server)
-		if (!origin) return callback(null, true)
-		if (allowedOrigins.indexOf(origin) !== -1) {
-			return callback(null, true)
-		}
-		return callback(new Error('CORS policy: This origin is not allowed'))
-	},
-	credentials: true,
-	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-	allowedHeaders: ['Content-Type', 'Authorization'],
-}
-
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions)) // preflight
-app.use(express.json())
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin matches any allowed pattern
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (typeof allowedOrigin === 'string') {
+        return origin === allowedOrigin;
+      } else if (allowedOrigin instanceof RegExp) {
+        return allowedOrigin.test(origin);
+      }
+      return false;
+    });
+    
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      // Still allow for mobile apps (they might not send origin)
+      callback(null, true);
+    }
+  },
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Health check
 app.get('/health', (req, res) => {
