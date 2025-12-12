@@ -99,6 +99,6 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["src/**/*", "prisma/**/*"],
+  "include": ["src/**/*", "prisma/**/*", "api/events", "api/health.ts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
