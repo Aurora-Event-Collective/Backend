@@ -99,8 +99,8 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true
   },
-  // "include": ["src/**/*", "prisma/**/*", "api/events", "api/health.ts"],
-  // "exclude": ["node_modules", "dist", "**/*.test.ts"]
-  "include": ["api/**/*", "src/lib/**/*", "prisma/**/*", "prisma.config.ts"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "src/server.ts"]
+  "include": ["src/lib/**/*", "prisma/**/*", "api/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "src/serverNone.ts"]
+  // "include": ["api/**/*", "src/lib/**/*", "prisma/**/*", "prisma.config.ts"],
+  // "exclude": ["node_modules", "dist", "**/*.test.ts", "src/server.ts"]
 }

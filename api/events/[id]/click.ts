@@ -33,8 +33,8 @@
 
 
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import { prisma } from '../../../src/lib/prisma'
-import { apiHandler } from '../../../src/lib/apiHandler'
+import { prisma } from '../../../src/lib/prisma.js'
+import { apiHandler } from '../../../src/lib/apiHandler.js'
 
 async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {

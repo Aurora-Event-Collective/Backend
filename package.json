@@ -5,10 +5,8 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.ts",
-    "build": "prisma generate && prisma migrate deploy",
-    "dev": "tsx watch src/server.ts",
-    "vercel-build": "npm run build "
+    "build": "npx prisma generate ",
+    "vercel-build": "npm run build && tsc"
   },
   "keywords": [],
   "author": "",
@@ -29,7 +27,7 @@
     "@prisma/extension-accelerate": "^3.0.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.2.1"
+    "express": "^4.22.1"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"
