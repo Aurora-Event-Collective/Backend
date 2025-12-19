@@ -1,6 +1,5 @@
 // src/lib/apiHandler.ts
 import { VercelRequest, VercelResponse } from '@vercel/node'
-import { prisma } from './prisma'
 
 type Handler = (req: VercelRequest, res: VercelResponse) => Promise<any> | any
 
@@ -15,10 +14,8 @@ export function apiHandler(handler: Handler): Handler {
         error: 'Internal Server Error',
         message: error instanceof Error ? error.message : 'An unknown error occurred'
       })
-    } finally {
-      await prisma.$disconnect().catch(error => {
-        console.error('Error disconnecting Prisma:', error)
-      })
     }
+    // Note: Do NOT disconnect Prisma in serverless functions
+    // Vercel reuses containers and Prisma Accelerate handles connection pooling automatically
   }
 }
