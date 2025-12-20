@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx prisma migrate reset && npx prisma migrate dev --name init && npx prisma generate ",
+    "build": "npx prisma migrate deploy && npx prisma generate ",
     "vercel-build": "npm run build && tsc"
   },
   "keywords": [],
